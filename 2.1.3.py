@@ -16,7 +16,7 @@ import pdfkit
 
 
 class Report:
-    def generate_excel(self, name_vac: str, statistic: List[Dict[str, str]]) -> None:
+    def generate_excel(self, name_vac: str, statistic: List[Dict[str, str]]):
         thins = Side(border_style="thin", color="000000")
         wb = Workbook()
         sheet1 = wb['Sheet']
