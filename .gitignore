@@ -1,3 +1,6 @@
 /.idea
 /venv
 /vacancy.csv
+/vacancies.csv
+/vacancies_by_year.csv
+/__pycache__

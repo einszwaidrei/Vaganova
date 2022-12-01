@@ -1,6 +1,5 @@
 import csv, re, os, datetime
 from typing import List, Dict, Tuple, Any
-
 from prettytable import PrettyTable, ALL
 import matplotlib
 from openpyxl.styles import Font, Border, Side, Alignment
@@ -157,7 +156,7 @@ class DataSet:
         self.file_name = file_name
         self.vacancies_objects = [Vacancy(vac) for vac in self.csv_filer(*self.csv_reader(file_name))]
 
-    def __clean_string(self, raw_html) -> str:
+    def clean_string(self, raw_html) -> str:
         """
         Очищает от html кода
         Arguments:
@@ -192,7 +191,7 @@ class DataSet:
                 List[Dict[str, str]]: Список словарей, каждый словарь - вакансия
         """
         new_vacans_list = list(filter(lambda vac: (len(vac) == len(list_naming) and vac.count('') == 0), reader))
-        return [dict(zip(list_naming, map(self.__clean_string, vac))) for vac in new_vacans_list]
+        return [dict(zip(list_naming, map(self.clean_string, vac))) for vac in new_vacans_list]
 
 
 class Vacancy:
@@ -263,7 +262,16 @@ class Salary:
         arguments:
             salary (float): Зарплата
         returns:
-            float: Зарплата в рублях    :
+            float: Зарплата в рублях
+        >>> Salary('100','1000','false','EUR').to_RUB(559)
+        33304.4
+        >>> Salary('10', '1000', 'true', 'RUR').to_RUB(500)
+        500.0
+        >>> Salary('10', '1000', 'true', 'QWE').to_RUB(1000.0)
+        Traceback (most recent call last):
+        ...
+        KeyError: 'QWE'
+
         """
         return salary * currency_to_rub[self.salary_currency]
 
@@ -335,7 +343,7 @@ class InputConect:
             """
             salary_from = int(float(salary.salary_from))
             salary_to = int(float(salary.salary_to))
-            if salary_from > 1000:
+            if salary_from >= 1000:
                 salary_from = f'{salary_from // 1000} {str(salary_from)[-3:]}'
                 salary_to = f'{salary_to // 1000} {str(salary_to)[-3:]}'
             info_gross = 'Без вычета налогов' if translation[salary.salary_gross] == 'Да' else 'С вычетом налогов'
