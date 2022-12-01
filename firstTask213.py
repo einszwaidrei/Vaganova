@@ -264,7 +264,7 @@ class Salary:
         returns:
             float: Зарплата в рублях
         >>> Salary('100','1000','false','EUR').to_RUB(559)
-        33304.4
+        33484.1
         >>> Salary('10', '1000', 'true', 'RUR').to_RUB(500)
         500.0
         >>> Salary('10', '1000', 'true', 'QWE').to_RUB(1000.0)
