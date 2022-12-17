@@ -82,3 +82,8 @@ def change_data(date_vac):
         return raw_html
  ```
  Однако работа метода осталась точно такой же. --->![запускHTML](https://user-images.githubusercontent.com/97828035/206180515-2745f3f9-3817-4c6c-9fe2-302a2d8154fd.jpg)
+
+
+
+### Скриншот разделенных по годам данных
+![2022-12-17_12-55-13](https://user-images.githubusercontent.com/97828035/208232191-60daa823-7fda-4a04-9b64-f9ca1540032b.png)
