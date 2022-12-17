@@ -13,6 +13,8 @@ from xlsx2html import xlsx2html
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 
+from dateutil.parser import parse
+
 
 class Report:
     """
@@ -164,8 +166,15 @@ class DataSet:
         returns:
             str: очищенная от html кода строка
         """
-        result = re.sub("<.*?>", '', raw_html)
-        return result if '\n' in raw_html else " ".join(result.split())
+        while raw_html.find('<') > -1:
+            index1 = raw_html.find('<')
+            index2 = raw_html.find('>')
+            raw_html = raw_html[:index1] + raw_html[index2 + 1:]
+        if '\n' not in raw_html:
+            raw_html = " ".join(raw_html.split())
+        return raw_html
+        # result = re.sub("<.*?>", '', raw_html)
+        # return result if '\n' in raw_html else " ".join(result.split())
 
     def csv_reader(self, file_name: str):
         """
@@ -360,7 +369,8 @@ class InputConect:
                 str: Отформатированная строка даты
             :return:
             """
-            return datetime.datetime.strptime(date_vac, '%Y-%m-%dT%H:%M:%S%z').strftime('%d.%m.%Y')
+            date = date_vac[:date_vac.find('T')].split('-')
+            return '.'.join(reversed(date))
 
         return [vacancy.name, vacancy.description, '\n'.join(vacancy.key_skills), translation[vacancy.experience_id],
                 translation[vacancy.premium], vacancy.employer_name, change_salary(vacancy.salary), vacancy.area_name,
@@ -392,9 +402,8 @@ class InputConect:
             list_vacancies = list(
                 filter(lambda vac: parameter[1] == translation[vac.salary.salary_currency], list_vacancies))
         elif parameter[0] == 'Дата публикации вакансии':
-            list_vacancies = list(filter(lambda vac: parameter[1] == datetime.datetime.strptime(vac.published_at,
-                                                                                                '%Y-%m-%dT%H:%M:%S%z').strftime(
-                '%d.%m.%Y'), list_vacancies))
+            list_vacancies = list(
+                filter(lambda vac: parameter[1] == '.'.join(reversed(vac.published_at[:vac.published_at.find('T')].split('-')))))
         else:
             list_vacancies = list(
                 filter(lambda vac: parameter[1] == vac.__getattribute__(reverse_translation[parameter[0]]),
@@ -418,8 +427,9 @@ class InputConect:
                 key=lambda vac: vac.salary.to_RUB(float(vac.salary.salary_from) + float(vac.salary.salary_to)) / 2,
                 reverse=is_reverse)
         elif param == 'Дата публикации вакансии':
-            list_vacancies.sort(key=lambda vac: datetime.datetime.strptime(vac.published_at, '%Y-%m-%dT%H:%M:%S%z'),
-                                reverse=is_reverse)
+            list_vacancies.sort(
+                key=lambda vac: '.'.join(reversed(vac.published_at[:vac.published_at.find('T')].split('-'))),
+                reverse=is_reverse)
         elif param == 'Опыт работы':
             list_vacancies.sort(key=lambda vac: rang_experience_id[vac.experience_id], reverse=is_reverse)
         else:
@@ -570,7 +580,7 @@ def change_data(date_vac) -> str:
     returns:
         str: Отформатированная дата публикации
     """
-    return datetime.datetime.strptime(date_vac, '%Y-%m-%dT%H:%M:%S%z').strftime('%Y')
+    return date_vac[:4]
 
 def exit_from_file(message):
     """
