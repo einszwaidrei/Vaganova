@@ -87,3 +87,16 @@ def change_data(date_vac):
 
 ### Скриншот разделенных по годам данных
 ![2022-12-17_12-55-13](https://user-images.githubusercontent.com/97828035/208232191-60daa823-7fda-4a04-9b64-f9ca1540032b.png)
+
+### Сравнение времени отработки кода:
+Базовый код без многопроцессорной обработки:
+![2способ](https://user-images.githubusercontent.com/97828035/208236251-6b4118eb-4c55-4f8d-9703-3f67dd7d966a.jpg)
+Multiprocessing 
+![1способ](https://user-images.githubusercontent.com/97828035/208236241-39fc18bb-ea6b-4a25-9a2f-b29ed36e3349.jpg)
+Concurrent futures
+![базовыйкод](https://user-images.githubusercontent.com/97828035/208236233-163d75d0-f558-4875-8671-7fd1d3078f57.jpg)
+
+Как можно заметить, код стал немного быстрее работать 
+
+
+
