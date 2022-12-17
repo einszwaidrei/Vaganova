@@ -490,12 +490,13 @@ def get_salary_level(list_vacancies, field, name_vacancy=''):
     return result
 
 
-def get_count_vacancies(list_vacancies, field, name_vacancy=''):
+def get_count_vacancies(list_vacancies, field, data, name_vacancy=''):
     """
     Формирует статистики, связанные с количеством вакансий
     Atributes:
         list_vacancies (List[Vacancy]): Список вакансий
         field (str): Поле вакансии
+        data (DataSet): Данные
         name_vacancy (str): Название вакансии(если ее ввели)
     returns:
         Dict[str,str]:  Статистики, связанные с количеством вакансий
@@ -604,41 +605,41 @@ def get_statistic(result_list, index, is_reversed=False, slice=0):
     """
     slice = len(result_list) if slice == 0 else slice
     return dict(sorted(result_list, key=lambda x: x[index], reverse=is_reversed)[:slice])
+if __name__=='__main__':
+    type_output=input('Введите данные для печати: ')
+    file_name = input('Введите название файла: ')
+    if os.stat(file_name).st_size == 0:
+        exit_from_file('Пустой файл')
+    data = DataSet(file_name)
+    if len(data.vacancies_objects) == 0:
+        exit_from_file('Нет данных')
+    if type_output=='Статистика':
+        vacancy_name = input('Введите название профессии: ')
+        for vac in data.vacancies_objects:
+            vac.published_at = change_data(vac.published_at)
+        dict_cities = {}
+        for vac in data.vacancies_objects:
+            if vac.area_name not in dict_cities.keys():
+                dict_cities[vac.area_name] = 0
+            dict_cities[vac.area_name] += 1
+        needed_vacancies_objects = list(filter(lambda vac: int(len(data.vacancies_objects) * 0.01) <= dict_cities[vac.area_name], data.vacancies_objects))
 
-type_output=input('Введите данные для печати: ')
-file_name = input('Введите название файла: ')
-if os.stat(file_name).st_size == 0:
-    exit_from_file('Пустой файл')
-data = DataSet(file_name)
-if len(data.vacancies_objects) == 0:
-    exit_from_file('Нет данных')
-if type_output=='Статистика':
-    vacancy_name = input('Введите название профессии: ')
-    for vac in data.vacancies_objects:
-        vac.published_at = change_data(vac.published_at)
-    dict_cities = {}
-    for vac in data.vacancies_objects:
-        if vac.area_name not in dict_cities.keys():
-            dict_cities[vac.area_name] = 0
-        dict_cities[vac.area_name] += 1
-    needed_vacancies_objects = list(filter(lambda vac: int(len(data.vacancies_objects) * 0.01) <= dict_cities[vac.area_name], data.vacancies_objects))
-
-    rp = Report()
-    list_statistic = [get_statistic(get_salary_level(data.vacancies_objects, 'published_at').items(), 0),
-                  get_statistic(get_salary_level(data.vacancies_objects, 'published_at', vacancy_name).items(), 0),
-                  get_statistic(get_count_vacancies(data.vacancies_objects, "published_at").items(), 0),
-                  get_statistic(get_count_vacancies(data.vacancies_objects, 'published_at', vacancy_name).items(), 0),
-                  get_statistic(get_salary_level(needed_vacancies_objects, 'area_name').items(), 1, True, 10),
-                  get_statistic(get_count_vacancies(needed_vacancies_objects, 'area_name').items(), 1, True, 10)]
-    rp.generate_excel(vacancy_name, list_statistic)
-    rp.generate_image(vacancy_name, list_statistic)
-    rp.generate_pdf(vacancy_name)
-elif 'Вакансии':
-    parametrOfFiltr = input('Введите параметр фильтрации: ')
-    parametrOfSort = input('Введите параметр сортировки: ')
-    isReversedSort = input('Обратный порядок сортировки (Да / Нет): ')
-    rowsNumbers = list(map(int,input('Введите диапазон вывода: ').split()))
-    collomnNames = input('Введите требуемые столбцы: ')
-    outer=InputConect(parametrOfFiltr, parametrOfSort,isReversedSort,rowsNumbers,collomnNames)
-    outer.check_parameters()
-    outer.print_vacancies(data.vacancies_objects)
+        rp = Report()
+        list_statistic = [get_statistic(get_salary_level(data.vacancies_objects, 'published_at').items(), 0),
+                      get_statistic(get_salary_level(data.vacancies_objects, 'published_at', vacancy_name).items(), 0),
+                      get_statistic(get_count_vacancies(data.vacancies_objects, "published_at",data).items(), 0),
+                      get_statistic(get_count_vacancies(data.vacancies_objects, 'published_at', data,vacancy_name).items(), 0),
+                      get_statistic(get_salary_level(needed_vacancies_objects, 'area_name').items(), 1, True, 10),
+                      get_statistic(get_count_vacancies(needed_vacancies_objects, 'area_name',data).items(), 1, True, 10)]
+        rp.generate_excel(vacancy_name, list_statistic)
+        rp.generate_image(vacancy_name, list_statistic)
+        rp.generate_pdf(vacancy_name)
+    elif 'Вакансии':
+        parametrOfFiltr = input('Введите параметр фильтрации: ')
+        parametrOfSort = input('Введите параметр сортировки: ')
+        isReversedSort = input('Обратный порядок сортировки (Да / Нет): ')
+        rowsNumbers = list(map(int,input('Введите диапазон вывода: ').split()))
+        collomnNames = input('Введите требуемые столбцы: ')
+        outer=InputConect(parametrOfFiltr, parametrOfSort,isReversedSort,rowsNumbers,collomnNames)
+        outer.check_parameters()
+        outer.print_vacancies(data.vacancies_objects)
