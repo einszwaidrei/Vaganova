@@ -1,7 +1,5 @@
 /.idea
 /venv
-/vacancy.csv
-/vacancies.csv
-/vacancies_by_year.csv
+/*.csv
 /__pycache__
 /csv_files/*.csv
