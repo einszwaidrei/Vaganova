@@ -6,6 +6,15 @@ from firstTask213 import Report, get_salary_level, get_count_vacancies, get_stat
 
 
 def get_statistic_by_year(file, vacancy, statistics):
+    """
+       Преобразовывает статистики для конкретного года
+       Args:
+           file (str): Название файла
+           vacancy (str): Название вакансии
+           statistics (List[Dict[int, Any]]): Список статистик по годам
+       Returns:
+           List[Dict[int, Any]]: Список статистик по годам.
+       """
     df = pd.read_csv(file)
     df['salary'] = df[['salary_from', 'salary_to']].mean(axis=1)
     year = int(file[15:19])
@@ -17,6 +26,14 @@ def get_statistic_by_year(file, vacancy, statistics):
 
 
 def get_stat_by_year(file, vacancy):
+    """
+       Возвращает статистики по годам
+       Args:
+           file (str): Название файла
+           vacancy (str): Название вакансии
+       Returns:
+           List[Dict[int, Any]]: Список статистик по годам.
+       """
     df = pd.read_csv(file)
     df['years'] = df['published_at'].apply(lambda s: s[:4])
     years = df['years'].unique()
@@ -27,8 +44,6 @@ def get_stat_by_year(file, vacancy):
     statistics = [salary_by_years, vac_salary_by_years, count_by_years, vac_count_by_years]
     files = []
     for year in years:
-        # data = df[df['years'] == year]
-        # data.to_csv(f'csv_files\\year_{year}.csv')
         files.append(f'csv_files\\year_{year}.csv')
     p = Pool()
     output = list(p.map(partial(get_statistic_by_year, vacancy=vacancy, statistics=statistics), files))

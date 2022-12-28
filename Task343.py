@@ -6,6 +6,13 @@ import math
 
 
 def get_statistic_by_city(file):
+    """
+       Возвращает статистики по городам
+       Args:
+           file (str): Название файла
+       Returns:
+           List[Dict[str, Any]]: Список статистик по городам.
+       """
     df = pd.read_csv(file)
     df = df[df['area_name'].map(df['area_name'].value_counts() >= len(df) * 0.01)]
     df['salary'] = df[['salary_from', 'salary_to']].mean(axis=1)
@@ -23,6 +30,16 @@ def get_statistic_by_city(file):
 
 
 def get_statistic_by_year(file, vacancy, area_name, statistics):
+    """
+       Преобразовывает статистики для конкретного года
+       Args:
+           file (str): Название файла
+           vacancy (str): Название вакансии
+           area_name (str): Название региона
+           statistics (List[Dict[int, Any]]): Список статистик по годам
+       Returns:
+           List[Dict[int, Any]]: Список статистик по годам.
+       """
     df = pd.read_csv(file)
     df['salary'] = df[['salary_from', 'salary_to']].mean(axis=1)
     year = int(file[15:19])
@@ -36,6 +53,15 @@ def get_statistic_by_year(file, vacancy, area_name, statistics):
 
 
 def get_statistics(file, vacancy, area_name):
+    """
+       Возвращает статистики
+       Args:
+           file (str): Название файла
+           vacancy (str): Название вакансии
+           area_name (str): Название региона
+       Returns:
+           List[Dict[Any, Any]]: Список статистик.
+       """
     df = pd.read_csv(file)
     df['years'] = df['published_at'].apply(lambda s: s[:4])
     years = df['years'].unique()
