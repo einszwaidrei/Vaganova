@@ -106,7 +106,7 @@ Concurrent futures
 ### В базу данных добавлена таблица с вакансиями
 ![2022-12-29_00-38-13](https://user-images.githubusercontent.com/97828035/209868445-22b27c18-7308-41ac-ad29-d093877b5a04.png)
 
-###База данных, таблица с вакансиями + вывод работы программы
+### База данных, таблица с вакансиями + вывод работы программы
 ![2022-12-29_00-39-09](https://user-images.githubusercontent.com/97828035/209868497-c91fd04b-9d42-424b-8066-0fa88e18c5ff.png)
 ![2022-12-29_00-39-21](https://user-images.githubusercontent.com/97828035/209868520-ef5d3b85-6ca3-48b9-84c0-7401ca497057.png)
 ![2022-12-29_00-39-31](https://user-images.githubusercontent.com/97828035/209868562-dd215ffb-ba54-494d-b35f-8d4b310c71b4.png)
