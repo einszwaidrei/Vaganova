@@ -572,6 +572,15 @@ rang_experience_id = {"noExperience": 0,
                       "between3And6": 2,
                       "moreThan6": 3}
 
+def get_year(date_vac) -> str:
+    """
+    Возвращает год от даты.
+    Args:
+        date_vac (str): Дата публикации.
+    Returns:
+        str: Год публикации.
+    """
+    return date_vac[:4]
 def change_data(date_vac) -> str:
     """
     Форматирует дату публикации к нужному формату
