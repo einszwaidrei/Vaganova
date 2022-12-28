@@ -101,3 +101,16 @@ Concurrent futures
 ### Частотность, с которой встречаются различные валюты, за 2003 – 2022 гг.
 ![2022-12-19_18-36-52](https://user-images.githubusercontent.com/97828035/208485328-863d520a-c1e5-4404-991a-efde7ff6c42d.png)
 
+###Создана база данных с таблицей валют
+![2022-12-29_00-05-51](https://user-images.githubusercontent.com/97828035/209868361-4f29bd8e-53e3-4295-9489-6ec2726ac495.png)
+### В базу данных добавлена таблица с вакансиями
+![2022-12-29_00-38-13](https://user-images.githubusercontent.com/97828035/209868445-22b27c18-7308-41ac-ad29-d093877b5a04.png)
+
+###База данных, таблица с вакансиями + вывод работы программы
+![2022-12-29_00-39-09](https://user-images.githubusercontent.com/97828035/209868497-c91fd04b-9d42-424b-8066-0fa88e18c5ff.png)
+![2022-12-29_00-39-21](https://user-images.githubusercontent.com/97828035/209868520-ef5d3b85-6ca3-48b9-84c0-7401ca497057.png)
+![2022-12-29_00-39-31](https://user-images.githubusercontent.com/97828035/209868562-dd215ffb-ba54-494d-b35f-8d4b310c71b4.png)
+![2022-12-29_00-39-41](https://user-images.githubusercontent.com/97828035/209868579-c8e737be-4903-45bc-ba36-26dc97c9fef8.png)
+![2022-12-29_00-39-49](https://user-images.githubusercontent.com/97828035/209868636-e1680ef8-7e94-4cc1-a04c-82adb5b313a2.png)
+![2022-12-29_00-39-58](https://user-images.githubusercontent.com/97828035/209868657-5243c786-e6d6-4fc4-85b9-4e940ea5c2fa.png)
+
